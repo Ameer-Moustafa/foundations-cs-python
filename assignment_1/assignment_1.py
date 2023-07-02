@@ -39,8 +39,15 @@ print(678%3*(8-(9/4)))
 def profileGenerator():
     ID = int(input('Enter your ID:'))
     NAME = input('Enter your Name:').replace("  ", " ")
-    DOB = input('Enter your date of birth (DD-MM-YYYY or DD/MM/YYYY format):').replace("  ", " ")
+    DOB = input('Enter your date of birth (DD-MM-YYYY or DD/MM/YYYY format):')
+    while(len(DOB) < 10 or len(DOB) > 10):
+        DOB = input('Please input your date of birth with the proper format (ex: 03/05/1995 or 03-05-1995): ')
+
     ADDRESS = input('Enter your address:').replace("  ", " ")
+
+    
+
+
     
     print(f'Your profile: ID: {"0" + str(ID)}, name: {NAME.upper().strip()}, DOB: {DOB[0:2] + "/" + DOB[3:5] + "/" + DOB[6:10]}, Address: {ADDRESS.strip().lower()}')
     
