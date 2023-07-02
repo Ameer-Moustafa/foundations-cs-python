@@ -44,7 +44,7 @@ def profileGenerator():
     
     print(f'Your profile: ID: {"0" + str(ID)}, name: {NAME.upper().strip()}, DOB: {DOB[0:2] + "/" + DOB[3:5] + "/" + DOB[6:10]}, Address: {ADDRESS.strip().lower()}')
     
-#profileGenerator()
+profileGenerator()
 
 ##############
 # Question 3 #
@@ -55,7 +55,7 @@ def digiter():
     digits = input('Input a number: ')
     print(f'{digits} has {len(digits)} digits')
 
-#digiter()
+digiter()
 
 ##############
 # Question 4 #
@@ -99,7 +99,7 @@ def gradeConverter():
     print(f'{numeric_grade} is equivelant to {letter_grade}')
         
 
-#gradeConverter()
+gradeConverter()
 
 
 ##############
@@ -114,7 +114,7 @@ def patterner():
     for i in range(number - 1, -1, -1):
         print(astrix * i)
 
-#patterner()
+patterner()
 
 ##############
 # Question 6 #
@@ -130,4 +130,4 @@ def evenFinder():
         if(i % 2 == 0):
             print(i)
     
-#evenFinder()
+evenFinder()
