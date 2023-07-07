@@ -53,7 +53,7 @@ def profileGenerator():
     print(f'Your profile: ID: {"0" + str(ID)}, name: {NAME.upper().strip()}, DOB: {DOB[0:2] + "/" + DOB[3:5] + "/" + DOB[6:10]}, Address: {ADDRESS.strip().lower()}')
     # Code above prints all the inputed variables into a profile.
     
-profileGenerator()
+#profileGenerator()
 
 ##############
 # Question 3 #
@@ -61,12 +61,14 @@ profileGenerator()
 
 # Below is a function that asks the user for a number and returns how many digits the number has
 
+# Think about this, in-case the user inputs a float. (maybe strip the "." from the float)
+
 def digiter():
 
     digits = input('Input a number: ') # asks the user for a number and saves it into a variable
     print(f'{digits} has {len(digits)} digits') # Returns how many digits are in said number
 
-digiter()
+#digiter()
 
 ##############
 # Question 4 #
@@ -114,7 +116,7 @@ def gradeConverter():
     print(f'{numeric_grade} is equivelant to {letter_grade}')
         
 
-gradeConverter()
+#gradeConverter()
 
 
 ##############
@@ -135,7 +137,7 @@ def patterner():
     for i in range(number - 1, -1, -1):
         print(astrix * i)
 
-patterner()
+#patterner()
 
 ##############
 # Question 6 #
@@ -155,4 +157,4 @@ def evenFinder():
         if(i % 2 == 0):
             print(i)
     
-evenFinder()
+#evenFinder()
