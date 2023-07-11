@@ -86,3 +86,25 @@ def getLowestValue(l):
 # Question 5 #
 ##############
 
+number = 6812
+
+def returnSum(n):
+    if n // 10 == 0:
+        return n
+    return n % 10 + returnSum(n // 10)
+
+# print(returnSum(number))
+
+##############
+# Question 6 #
+##############
+
+string = "Hellloooo worlddddd"
+
+def cleanString(s):
+    if s == "":
+        return
+    return 
+        
+
+print(cleanString(string))
