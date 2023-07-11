@@ -102,9 +102,14 @@ def returnSum(n):
 string = "Hellloooo worlddddd"
 
 def cleanString(s):
-    if s == "":
-        return
-    return 
+    if len(s) < 2:
+        return s
+    elif(s[0] == s[1]):
+        return cleanString(s[1:])
+    else:
+        return s[0] + cleanString(s[1:])
+    
         
 
-print(cleanString(string))
+# print(cleanString(string))
+
