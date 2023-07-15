@@ -11,7 +11,7 @@ def reverseConcatinate(s, i):
             reversed_string += s[j]
         return reversed_string * i
 
-# print(reverseConcatinate("hello", 10)) O(n)
+# print(reverseConcatinate("hello", 10)) O(n) Compplexity is dependant on how many times we have to iterate through and multiply the string.
 
 
 ##############
@@ -28,7 +28,7 @@ def rearrangeString(string):
             lower_case += string[i]
     return upper_case + lower_case
 
-# print(rearrangeString("Wake Up Neo"))
+# print(rearrangeString("Wake Up Neo")) O(n), N will increase in complexity when the length of the string grows.
 
 
 ##############
@@ -51,7 +51,7 @@ def checkCharacter(s1, s2):
     else:
         return False
     
-# print(checkCharacter(string1, string2))
+# print(checkCharacter(string1, string2)) O(N^2) This is quadratic since the inner for-loop is dependant on the outer for loop
 
 ##############
 # Question 4 #
@@ -67,7 +67,7 @@ def getHighestValue(l):
             index = i
     print(f'The Highest value in the list is {sorted_list[len(sorted_list) - 1]} and it is at index {index}')
 
-# getHighestValue(num_list)
+# getHighestValue(num_list) O(n), The time complexity of the algorithm will grow depending on the size of the list that needs to be sorted.
 
 ##### Bonus #####
 
@@ -79,7 +79,7 @@ def getLowestValue(l):
             index = i
     print(f'The lowest value in the list is {sorted_list[len(sorted_list) - 1]} and it is at index {index}')
 
-# getLowestValue(num_list)
+# getLowestValue(num_list) # O(n), The time complexity of the algorithm will grow depending on the size of the list that needs to be sorted.
 
 
 ##############
@@ -93,7 +93,7 @@ def returnSum(n):
         return n
     return n % 10 + returnSum(n // 10)
 
-# print(returnSum(number))
+# print(returnSum(number)) O(n) The complexity of the algorithm will grow depending on how many times the function is called.
 
 ##############
 # Question 6 #
@@ -111,5 +111,5 @@ def cleanString(s):
     
         
 
-print(cleanString(string))
+# print(cleanString(string)) # O(n), N being the length of the string.
 
