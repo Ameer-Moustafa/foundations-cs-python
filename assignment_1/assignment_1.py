@@ -3,34 +3,34 @@
 ##############
 
 # A)
-print(10*(90+2)-5);
+print(10*(90+2)-5); # O(1)
 
 # B)
-print(10*90+2-5);
+print(10*90+2-5); # O(1)
 
 # C)
-print(10*90+(2-5));
+print(10*90+(2-5)); # O(1)
 
 # D)
-print(10.0*(90+2)-5);
+print(10.0*(90+2)-5); # O(1)
 
 # E)
-print(120/(20+40)-(6-2)/4);
+print(120/(20+40)-(6-2)/4); # O(1)
 
 # F)
-print(5.0/2);
+print(5.0/2); # O(1)
 
 # G)
-print(5/2);
+print(5/2); # O(1)
 
 # H)
-print(5.0/2.0);
+print(5.0/2.0); # O(1)
 
 # I)
-print(5/2.0);
+print(5/2.0); # O(1)
 
 # J)
-print(678%3*(8-(9/4)))
+print(678%3*(8-(9/4))) # O(1)
 
 ##############
 # Question 2 #
@@ -53,7 +53,7 @@ def profileGenerator():
     print(f'Your profile: ID: {"0" + str(ID)}, name: {NAME.upper().strip()}, DOB: {DOB[0:2] + "/" + DOB[3:5] + "/" + DOB[6:10]}, Address: {ADDRESS.strip().lower()}')
     # Code above prints all the inputed variables into a profile.
     
-#profileGenerator()
+#profileGenerator()  # O(1)
 
 ##############
 # Question 3 #
@@ -68,7 +68,7 @@ def digiter():
     digits = input('Input a number: ') # asks the user for a number and saves it into a variable
     print(f'{digits} has {len(digits)} digits') # Returns how many digits are in said number
 
-#digiter()
+#digiter() # O(1), It is simply displaying data to a user
 
 ##############
 # Question 4 #
@@ -116,7 +116,7 @@ def gradeConverter():
     print(f'{numeric_grade} is equivelant to {letter_grade}')
         
 
-#gradeConverter()
+#gradeConverter() # O(1) The algo will have the same runtime regardless of input.
 
 
 ##############
@@ -137,7 +137,7 @@ def patterner():
     for i in range(number - 1, -1, -1):
         print(astrix * i)
 
-#patterner()
+#patterner() # O(n), N in this case being the Number a user inputs. The higher the number, the more the algorithm has to loop and the more "*" is printed.
 
 ##############
 # Question 6 #
@@ -157,4 +157,4 @@ def evenFinder():
         if(i % 2 == 0):
             print(i)
     
-#evenFinder()
+#evenFinder() # O(n), n being the distance between both numbers. The bigger the gap, the more checks the algorithm has to do.

@@ -11,7 +11,7 @@ def reverseConcatinate(s, i):
             reversed_string += s[j]
         return reversed_string * i
 
-# print(reverseConcatinate("hello", 2))
+# print(reverseConcatinate("hello", 10)) O(n)
 
 
 ##############
@@ -111,5 +111,5 @@ def cleanString(s):
     
         
 
-# print(cleanString(string))
+print(cleanString(string))
 
