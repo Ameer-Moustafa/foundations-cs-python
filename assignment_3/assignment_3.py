@@ -1,11 +1,27 @@
 from datetime import datetime, date
 import os
 
-def getName():
+# Helper Functions
+
+def getName(): # Get initial user name and store it in a global variable
     global name
     name = input("Hello there, enter your name to get started: ")
 
-def displayMenu():
+# A function to create matrices
+    def createMatrix():
+        matrix = []
+        num_rows = eval(input("Enter the number of rows for your matrix: "))
+        num_col = eval(input("Enter the number of columns for your matrix: "))
+        for row in range(num_rows):
+            matrix.append([])
+            for col in range(num_col):
+                element = input(f"Enter element {col} in row {row} to be added to the matrix: ")
+                matrix[row].append(element)
+        return matrix
+
+
+
+def displayMenu(): # Main Menu function
     os.system('clear')
     print("""\033[1;31m
     
@@ -32,9 +48,13 @@ def displayMenu():
     selection = eval(input("            Enter the corresponding number to make your selection (0-7): "))
     if(selection == 1):
         addMatrices()
+    elif(selection == 2):
+        checkRotation()
         
-            
-            
+
+
+
+# Main functions
 
 def addMatrices():
     os.system('clear')
@@ -74,6 +94,20 @@ def addMatrices():
         addMatrices()
     else:
         displayMenu()
+    
+def checkRotation():
+    print(f"""
+░█████╗░██╗░░██╗███████╗░█████╗░██╗░░██╗  ██████╗░░█████╗░████████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗
+██╔══██╗██║░░██║██╔════╝██╔══██╗██║░██╔╝  ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║
+██║░░╚═╝███████║█████╗░░██║░░╚═╝█████═╝░  ██████╔╝██║░░██║░░░██║░░░███████║░░░██║░░░██║██║░░██║██╔██╗██║
+██║░░██╗██╔══██║██╔══╝░░██║░░██╗██╔═██╗░  ██╔══██╗██║░░██║░░░██║░░░██╔══██║░░░██║░░░██║██║░░██║██║╚████║
+╚█████╔╝██║░░██║███████╗╚█████╔╝██║░╚██╗  ██║░░██║╚█████╔╝░░░██║░░░██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║
+░╚════╝░╚═╝░░╚═╝╚══════╝░╚════╝░╚═╝░░╚═╝  ╚═╝░░╚═╝░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝
+\n""")
+    matrix1 = createMatrix()
+    input("First matrix created, press Enter to continue....")
+    matrix2 = createMatrix()
+    input("Second matrix created, press Enter to continue....")
 
 
 
@@ -82,6 +116,8 @@ def addMatrices():
 
 
 
+
+# Main program loop
 
 def main():
     getName()
