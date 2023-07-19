@@ -3,26 +3,32 @@ import os
 
 # Helper Functions
 
+def clear(): # A function to clear the screen regardless of windows or Linux
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 def getName(): # Get initial user name and store it in a global variable
     global name
     name = input("Hello there, enter your name to get started: ")
 
 # A function to create matrices
-    def createMatrix():
-        matrix = []
-        num_rows = eval(input("Enter the number of rows for your matrix: "))
-        num_col = eval(input("Enter the number of columns for your matrix: "))
-        for row in range(num_rows):
-            matrix.append([])
-            for col in range(num_col):
+def createMatrix():
+    matrix = []
+    num_rows = eval(input("Enter the number of rows for your matrix: "))
+    num_col = eval(input("Enter the number of columns for your matrix: "))
+    for row in range(num_rows):
+        matrix.append([])
+        for col in range(num_col):
                 element = input(f"Enter element {col} in row {row} to be added to the matrix: ")
                 matrix[row].append(element)
-        return matrix
+    return matrix
 
 
 
 def displayMenu(): # Main Menu function
-    os.system('clear')
+    clear()
     print("""\033[1;31m
     
 ░█████╗░░██████╗░██████╗██╗░██████╗░███╗░░██╗███╗░░░███╗███████╗███╗░░██╗████████╗  ██████╗░
@@ -57,7 +63,7 @@ def displayMenu(): # Main Menu function
 # Main functions
 
 def addMatrices():
-    os.system('clear')
+    clear()
     print(f"""
 
 ░█████╗░██████╗░██████╗░  ███╗░░░███╗░█████╗░████████╗██████╗░██╗░█████╗░███████╗░██████╗
@@ -96,6 +102,7 @@ def addMatrices():
         displayMenu()
     
 def checkRotation():
+    clear()
     print(f"""
 ░█████╗░██╗░░██╗███████╗░█████╗░██╗░░██╗  ██████╗░░█████╗░████████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗
 ██╔══██╗██║░░██║██╔════╝██╔══██╗██║░██╔╝  ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║
@@ -108,6 +115,10 @@ def checkRotation():
     input("First matrix created, press Enter to continue....")
     matrix2 = createMatrix()
     input("Second matrix created, press Enter to continue....")
+    for row in range(len(matrix1)):
+        for col in range(len(matrix1[row])):
+            print(matrix1[row][col])
+
 
 
 
@@ -120,8 +131,9 @@ def checkRotation():
 # Main program loop
 
 def main():
-    getName()
-    displayMenu()
+    # getName()
+    # displayMenu()
+    checkRotation()
     
 
 main()
