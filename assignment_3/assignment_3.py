@@ -18,6 +18,7 @@ def createMatrix():
     matrix = []
     num_rows = eval(input("Enter the number of rows for your matrix: "))
     num_col = eval(input("Enter the number of columns for your matrix: "))
+    print()
     for row in range(num_rows):
         matrix.append([])
         for col in range(num_col):
@@ -56,13 +57,17 @@ def displayMenu(): # Main Menu function
         addMatrices()
     elif(selection == 2):
         checkRotation()
+    elif(selection == 3):
+        pass
+    elif(selection == 4):
+        convertMatrix()
         
 
 
 
 # Main functions
 
-def addMatrices():
+def addMatrices(): # A function to add matrices
     clear()
     print(f"""
 
@@ -101,7 +106,7 @@ def addMatrices():
     else:
         displayMenu()
     
-def checkRotation():
+def checkRotation(): # A function to check if a matrice is a rotation of another matrice
     clear()
     print(f"""
 ░█████╗░██╗░░██╗███████╗░█████╗░██╗░░██╗  ██████╗░░█████╗░████████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗
@@ -112,12 +117,76 @@ def checkRotation():
 ░╚════╝░╚═╝░░╚═╝╚══════╝░╚════╝░╚═╝░░╚═╝  ╚═╝░░╚═╝░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝
 \n""")
     matrix1 = createMatrix()
-    input("First matrix created, press Enter to continue....")
+    input("First matrix created, press Enter to continue....\n")
     matrix2 = createMatrix()
-    input("Second matrix created, press Enter to continue....")
+    input("Second matrix created, press Enter to continue....\n")
+    matrix3 = []
+    matrix4 = []
+    
     for row in range(len(matrix1)):
         for col in range(len(matrix1[row])):
-            print(matrix1[row][col])
+            matrix3.append(matrix1[row][col])
+
+    
+    for col in range(len(matrix2[0])):
+        for row in range(len(matrix2)):
+            matrix4.append(matrix2[row][col])
+
+    if(matrix3 == matrix4):
+        print(f"""
+        #####################################################################
+        #The first and second matrices provided are rotations of each other.#
+        #####################################################################\n""")
+    else:
+        print(f"""
+        #########################################################################
+        #The first and second matrices provided are NOT rotations of each other.#
+        #####################################################################\n""")
+    
+    choice = str(input("\033[1;31m Enter Y to check the rotation of another pair or any button to return to the main menu: "))
+    if(choice == "y" or choice == "Y"):
+        checkRotation()
+    else:
+        displayMenu()
+
+
+def invertDictionary():
+    pass
+
+
+def convertMatrix(): # A function that convers a matrix to a dictionary
+    clear()
+    print(f"""
+    
+░█████╗░░█████╗░███╗░░██╗██╗░░░██╗███████╗██████╗░████████╗  ████████╗░█████╗░
+██╔══██╗██╔══██╗████╗░██║██║░░░██║██╔════╝██╔══██╗╚══██╔══╝  ╚══██╔══╝██╔══██╗
+██║░░╚═╝██║░░██║██╔██╗██║╚██╗░██╔╝█████╗░░██████╔╝░░░██║░░░  ░░░██║░░░██║░░██║
+██║░░██╗██║░░██║██║╚████║░╚████╔╝░██╔══╝░░██╔══██╗░░░██║░░░  ░░░██║░░░██║░░██║
+╚█████╔╝╚█████╔╝██║░╚███║░░╚██╔╝░░███████╗██║░░██║░░░██║░░░  ░░░██║░░░╚█████╔╝
+░╚════╝░░╚════╝░╚═╝░░╚══╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░░╚════╝░
+
+██████╗░██╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░█████╗░██████╗░██╗░░░██╗
+██╔══██╗██║██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔══██╗██╔══██╗╚██╗░██╔╝
+██║░░██║██║██║░░╚═╝░░░██║░░░██║██║░░██║██╔██╗██║███████║██████╔╝░╚████╔╝░
+██║░░██║██║██║░░██╗░░░██║░░░██║██║░░██║██║╚████║██╔══██║██╔══██╗░░╚██╔╝░░
+██████╔╝██║╚█████╔╝░░░██║░░░██║╚█████╔╝██║░╚███║██║░░██║██║░░██║░░░██║░░░
+╚═════╝░╚═╝░╚════╝░░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░""")
+    print("Please make sure the elements inside your matrix rows follow the following convention: [First Name, Last Name, ID, Job Title, Company]")
+    matrix = createMatrix()
+    dict = {}
+
+    for row in range(len(matrix)):
+        key = matrix[row].pop(2)
+        dict.setdefault(key,matrix[row])
+    
+    print("Your dictionary is below\n")
+    print(dict)
+    print()
+    choice = str(input("\033[1;31m Enter Y to convert another matrix or any button to return to the main menu: "))
+    if(choice == "y" or choice == "Y"):
+        convertMatrix()
+    else:
+        displayMenu()
 
 
 
@@ -131,9 +200,8 @@ def checkRotation():
 # Main program loop
 
 def main():
-    # getName()
-    # displayMenu()
-    checkRotation()
+    getName()
+    displayMenu()
     
 
 main()
