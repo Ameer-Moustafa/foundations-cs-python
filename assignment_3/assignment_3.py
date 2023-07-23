@@ -26,6 +26,40 @@ def createMatrix():
                 matrix[row].append(element)
     return matrix
 
+# A function to check if a string is a palindrome or not.
+def stringChecker(s):
+    if len(s) == 0:
+        return True
+    else:
+        if(s[0] == s[-1]):
+            return stringChecker(s[1:-1])
+        else:
+            return False
+
+
+def merge(left, right): # A function to handle the merging part of the merge sort algorithm
+    merged_array = []
+    index_left = 0
+    index_right = 0
+    while index_left < len(left) and index_right < len(right):
+        if left[index_left] <= right[index_right]:
+            merged_array.append(left[index_left])
+            index_left += 1
+        else:
+            merged_array.append(right[index_right])
+            index_right += 1
+    merged_array += left[index_left:]
+    merged_array += right[index_right:]
+    return merged_array
+
+
+def mergeSort(list): # A function to handle splitting the arrays
+    if len(list) <= 1:
+        return list
+    mid = len(list) // 2
+    left = mergeSort(list[:mid])
+    right = mergeSort(list[mid:])
+    return merge(left, right)
 
 
 def displayMenu(): # Main Menu function
@@ -61,6 +95,11 @@ def displayMenu(): # Main Menu function
         pass
     elif(selection == 4):
         convertMatrix()
+    elif(selection == 5):
+        checkPalindrome()
+    elif(selection == 6):
+        searchElement()
+
         
 
 
@@ -105,6 +144,10 @@ def addMatrices(): # A function to add matrices
         addMatrices()
     else:
         displayMenu()
+
+
+def invertDictionary(): # A function to invert a dictionary
+    pass
     
 def checkRotation(): # A function to check if a matrice is a rotation of another matrice
     clear()
@@ -150,9 +193,6 @@ def checkRotation(): # A function to check if a matrice is a rotation of another
         displayMenu()
 
 
-def invertDictionary():
-    pass
-
 
 def convertMatrix(): # A function that convers a matrix to a dictionary
     clear()
@@ -187,6 +227,62 @@ def convertMatrix(): # A function that convers a matrix to a dictionary
         convertMatrix()
     else:
         displayMenu()
+
+
+def checkPalindrome():
+    print(f"""
+    
+░█████╗░██╗░░██╗███████╗░█████╗░██╗░░██╗
+██╔══██╗██║░░██║██╔════╝██╔══██╗██║░██╔╝
+██║░░╚═╝███████║█████╗░░██║░░╚═╝█████═╝░
+██║░░██╗██╔══██║██╔══╝░░██║░░██╗██╔═██╗░
+╚█████╔╝██║░░██║███████╗╚█████╔╝██║░╚██╗
+░╚════╝░╚═╝░░╚═╝╚══════╝░╚════╝░╚═╝░░╚═╝
+
+██████╗░░█████╗░██╗░░░░░██╗███╗░░██╗██████╗░██████╗░░█████╗░███╗░░░███╗███████╗
+██╔══██╗██╔══██╗██║░░░░░██║████╗░██║██╔══██╗██╔══██╗██╔══██╗████╗░████║██╔════╝
+██████╔╝███████║██║░░░░░██║██╔██╗██║██║░░██║██████╔╝██║░░██║██╔████╔██║█████╗░░
+██╔═══╝░██╔══██║██║░░░░░██║██║╚████║██║░░██║██╔══██╗██║░░██║██║╚██╔╝██║██╔══╝░░
+██║░░░░░██║░░██║███████╗██║██║░╚███║██████╔╝██║░░██║╚█████╔╝██║░╚═╝░██║███████╗
+╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚═╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░╚═╝╚══════╝\n""")
+
+    string = str(input("Input a string to perform the check on: "))
+    result = stringChecker(string)
+    if(result):
+        print(f"{string} is a Palindrome")
+    else:
+        print(f"{string} is NOT a Palindrome")
+    
+    choice = str(input("\033[1;31m Enter Y to check another string or any button to return to the main menu: "))
+    if(choice == "y" or choice == "Y"):
+        checkPalindrome()
+    else:
+        displayMenu()
+
+
+def searchElement():
+    print(f"""
+    
+░██████╗███████╗░█████╗░██████╗░░█████╗░██╗░░██╗  ███████╗██╗░░░░░███████╗███╗░░░███╗███████╗███╗░░██╗████████╗
+██╔════╝██╔════╝██╔══██╗██╔══██╗██╔══██╗██║░░██║  ██╔════╝██║░░░░░██╔════╝████╗░████║██╔════╝████╗░██║╚══██╔══╝
+╚█████╗░█████╗░░███████║██████╔╝██║░░╚═╝███████║  █████╗░░██║░░░░░█████╗░░██╔████╔██║█████╗░░██╔██╗██║░░░██║░░░
+░╚═══██╗██╔══╝░░██╔══██║██╔══██╗██║░░██╗██╔══██║  ██╔══╝░░██║░░░░░██╔══╝░░██║╚██╔╝██║██╔══╝░░██║╚████║░░░██║░░░
+██████╔╝███████╗██║░░██║██║░░██║╚█████╔╝██║░░██║  ███████╗███████╗███████╗██║░╚═╝░██║███████╗██║░╚███║░░░██║░░░
+╚═════╝░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝  ╚══════╝╚══════╝╚══════╝╚═╝░░░░░╚═╝╚══════╝╚═╝░░╚══╝░░░╚═╝░░░\n""")
+    elements = input("Enter the elements for your list, seperated by a space: ").split()
+    value = input("Now enter a value to search for within your list: ")
+    sorted_list = mergeSort(elements)
+    for i in range(len(sorted_list)):
+        if sorted_list[i] == value:
+            print(f"{value} has been found at index {i}")
+        else:
+            print(f"{value} has not been found, try again")
+    choice = str(input("\033[1;31m Enter Y to search for another element or any button to return to the main menu: "))
+    if(choice == "y" or choice == "Y"):
+        searchElement()
+    else:
+        displayMenu()
+
 
 
 
