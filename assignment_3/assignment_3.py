@@ -3,18 +3,18 @@ import os
 
 # Helper Functions
 
-def clear(): # A function to clear the screen regardless of windows or Linux
+def clear(): # A function to clear the screen regardless of windows or Linux  # O(1)
     if os.name == 'nt':
         os.system('cls')
     else:
         os.system('clear')
 
-def getName(): # Get initial user name and store it in a global variable
+def getName(): # Get initial user name and store it in a global variable # O(1)
     global name
     name = input("Hello there, enter your name to get started: ")
 
 # A function to create matrices
-def createMatrix():
+def createMatrix(): # O(n^2) N being the number of inputs
     matrix = []
     num_rows = eval(input("Enter the number of rows for your matrix: "))
     num_col = eval(input("Enter the number of columns for your matrix: "))
@@ -26,8 +26,18 @@ def createMatrix():
                 matrix[row].append(element)
     return matrix
 
+def createDictionary(): # A function to help with creating dictionaries # O(N) N being how many key-value pairs the user inputs
+    dict = {}
+    pairs = eval(input("How many value-pairs do you want in your dictionary: "))
+
+    for value in range(pairs):
+        key = input("Input your key: ")
+        value = input("Input your value: ")
+        dict[key] = value
+    return dict
+
 # A function to check if a string is a palindrome or not.
-def stringChecker(s):
+def stringChecker(s): # O(n) N being how many times the function is called again.
     if len(s) == 0:
         return True
     else:
@@ -53,7 +63,7 @@ def merge(left, right): # A function to handle the merging part of the merge sor
     return merged_array
 
 
-def mergeSort(list): # A function to handle splitting the arrays
+def mergeSort(list): # A function to handle splitting the arrays   # O(N * LogN)
     if len(list) <= 1:
         return list
     mid = len(list) // 2
@@ -62,7 +72,7 @@ def mergeSort(list): # A function to handle splitting the arrays
     return merge(left, right)
 
 
-def displayMenu(): # Main Menu function
+def displayMenu(): # Main Menu function # O(1)
     clear()
     print("""\033[1;31m
     
@@ -106,7 +116,7 @@ def displayMenu(): # Main Menu function
 
 # Main functions
 
-def addMatrices(): # A function to add matrices
+def addMatrices(): # A function to add matrices # O(N^2) N representing the number of inputs
     clear()
     print(f"""
 
@@ -147,9 +157,42 @@ def addMatrices(): # A function to add matrices
 
 
 def invertDictionary(): # A function to invert a dictionary
-    pass
+    clear()
+    print("""
     
-def checkRotation(): # A function to check if a matrice is a rotation of another matrice
+██╗███╗░░██╗██╗░░░██╗███████╗██████╗░████████╗
+██║████╗░██║██║░░░██║██╔════╝██╔══██╗╚══██╔══╝
+██║██╔██╗██║╚██╗░██╔╝█████╗░░██████╔╝░░░██║░░░
+██║██║╚████║░╚████╔╝░██╔══╝░░██╔══██╗░░░██║░░░
+██║██║░╚███║░░╚██╔╝░░███████╗██║░░██║░░░██║░░░
+╚═╝╚═╝░░╚══╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░
+
+██████╗░██╗░█████╗░████████╗██╗░█████╗░███╗░░██╗░█████╗░██████╗░██╗░░░██╗
+██╔══██╗██║██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║██╔══██╗██╔══██╗╚██╗░██╔╝
+██║░░██║██║██║░░╚═╝░░░██║░░░██║██║░░██║██╔██╗██║███████║██████╔╝░╚████╔╝░
+██║░░██║██║██║░░██╗░░░██║░░░██║██║░░██║██║╚████║██╔══██║██╔══██╗░░╚██╔╝░░
+██████╔╝██║╚█████╔╝░░░██║░░░██║╚█████╔╝██║░╚███║██║░░██║██║░░██║░░░██║░░░
+╚═════╝░╚═╝░╚════╝░░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░\n""")
+
+    dict = createDictionary()
+    flipped_dict = {}
+    for key, value in dict.items():
+        if value in flipped_dict:
+            if isinstance(flipped_dict[value], list):
+                flipped_dict[value].append(key)
+            else:
+                flipped_dict[value] = [flipped_dict[value], key]
+        else:
+            flipped_dict[value] = key
+    print(f"Your original dictionary is {dict} and your inverted dictionary is {flipped_dict}\n")
+    choice = str(input("\033[1;31m Enter Y to invert another dictionary or any button to return to the main menu: "))
+    if(choice == "y" or choice == "Y"):
+        invertDictionary()
+    else:
+        displayMenu()
+
+    
+def checkRotation(): # A function to check if a matrice is a rotation of another matrice #O(N^2) N being the number of inputs from our create matrix function
     clear()
     print(f"""
 ░█████╗░██╗░░██╗███████╗░█████╗░██╗░░██╗  ██████╗░░█████╗░████████╗░█████╗░████████╗██╗░█████╗░███╗░░██╗
@@ -184,7 +227,7 @@ def checkRotation(): # A function to check if a matrice is a rotation of another
         print(f"""
         #########################################################################
         #The first and second matrices provided are NOT rotations of each other.#
-        #####################################################################\n""")
+        #########################################################################\n""")
     
     choice = str(input("\033[1;31m Enter Y to check the rotation of another pair or any button to return to the main menu: "))
     if(choice == "y" or choice == "Y"):
@@ -194,7 +237,7 @@ def checkRotation(): # A function to check if a matrice is a rotation of another
 
 
 
-def convertMatrix(): # A function that convers a matrix to a dictionary
+def convertMatrix(): # A function that convers a matrix to a dictionary # O(N^2) Due to our CreateMatrix function
     clear()
     print(f"""
     
@@ -219,7 +262,8 @@ def convertMatrix(): # A function that convers a matrix to a dictionary
         key = matrix[row].pop(2)
         dict.setdefault(key,matrix[row])
     
-    print("Your dictionary is below\n")
+    print()
+    print("Your dictionary is below:\n")
     print(dict)
     print()
     choice = str(input("\033[1;31m Enter Y to convert another matrix or any button to return to the main menu: "))
@@ -229,7 +273,8 @@ def convertMatrix(): # A function that convers a matrix to a dictionary
         displayMenu()
 
 
-def checkPalindrome():
+def checkPalindrome(): # O(n) N being the amount of times our recursive function stringChecker is called
+    clear()
     print(f"""
     
 ░█████╗░██╗░░██╗███████╗░█████╗░██╗░░██╗
@@ -247,11 +292,12 @@ def checkPalindrome():
 ╚═╝░░░░░╚═╝░░╚═╝╚══════╝╚═╝╚═╝░░╚══╝╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░╚═╝╚══════╝\n""")
 
     string = str(input("Input a string to perform the check on: "))
+    print()
     result = stringChecker(string)
     if(result):
-        print(f"{string} is a Palindrome")
+        print(f"{string} is a Palindrome\n")
     else:
-        print(f"{string} is NOT a Palindrome")
+        print(f"{string} is NOT a Palindrome\n")
     
     choice = str(input("\033[1;31m Enter Y to check another string or any button to return to the main menu: "))
     if(choice == "y" or choice == "Y"):
@@ -260,7 +306,7 @@ def checkPalindrome():
         displayMenu()
 
 
-def searchElement():
+def searchElement(): # O(N*LogN) Due to our mergeSort algorithm
     print(f"""
     
 ░██████╗███████╗░█████╗░██████╗░░█████╗░██╗░░██╗  ███████╗██╗░░░░░███████╗███╗░░░███╗███████╗███╗░░██╗████████╗
@@ -274,9 +320,8 @@ def searchElement():
     sorted_list = mergeSort(elements)
     for i in range(len(sorted_list)):
         if sorted_list[i] == value:
-            print(f"{value} has been found at index {i}")
-        else:
-            print(f"{value} has not been found, try again")
+            return print(f"{value} has been found at index {i}")
+    return print(f"{value} has not been found")
     choice = str(input("\033[1;31m Enter Y to search for another element or any button to return to the main menu: "))
     if(choice == "y" or choice == "Y"):
         searchElement()
@@ -293,7 +338,7 @@ def searchElement():
 
 
 
-# Main program loop
+# Main program loop # O(N^2) is the worst case senario for our program
 
 def main():
     getName()
