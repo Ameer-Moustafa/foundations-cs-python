@@ -22,7 +22,7 @@ def createMatrix(): # O(n^2) N being the number of inputs
     for row in range(num_rows):
         matrix.append([])
         for col in range(num_col):
-                element = input(f"Enter element {col} in row {row} to be added to the matrix: ")
+                element = input(f"\033[0;32m Enter element {col} in row {row} to be added to the matrix: ")
                 matrix[row].append(element)
     return matrix
 
@@ -31,8 +31,9 @@ def createDictionary(): # A function to help with creating dictionaries # O(N) N
     pairs = eval(input("How many value-pairs do you want in your dictionary: "))
 
     for value in range(pairs):
-        key = input("Input your key: ")
-        value = input("Input your value: ")
+        key = input("\033[0;32m Input your key: ")
+        value = input("\033[0;31m Input your value: ")
+        print()
         dict[key] = value
     return dict
 
@@ -102,7 +103,7 @@ def displayMenu(): # Main Menu function # O(1)
     elif(selection == 2):
         checkRotation()
     elif(selection == 3):
-        pass
+        invertDictionary()
     elif(selection == 4):
         convertMatrix()
     elif(selection == 5):
@@ -148,7 +149,7 @@ def addMatrices(): # A function to add matrices # O(N^2) N representing the numb
             matrix2[row].append(element2)
             matrix3[row].append(matrix1[row][col] + matrix2[row][col])
 
-    print(f"\033[1;31m The sum of the two matrices is {matrix3}\n")
+    print(f"\033[0;32m The sum of the two matrices is {matrix3}\n")
     choice = str(input("\033[1;31m Enter Y to add another matrix or any button to return to the main menu: "))
     if(choice == "y" or choice == "Y"):
         addMatrices()
@@ -156,7 +157,7 @@ def addMatrices(): # A function to add matrices # O(N^2) N representing the numb
         displayMenu()
 
 
-def invertDictionary(): # A function to invert a dictionary
+def invertDictionary(): # A function to invert a dictionary # O(n) N being the input size from our createDictionary() function.
     clear()
     print("""
     
