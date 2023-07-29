@@ -66,6 +66,20 @@ def mergeSort(list):  # This function will handle the splitting of the arrays in
   right = mergeSort(list[mid:])
   return merge(left, right)
 
+
+# A function that will sort tickets using regex, will be used to auto increment ticket IDs when booking
+
+def sortTickets():
+  ticket_list = []
+  for row in range(len(ticket_structure)):
+    numbers = re.findall('[0-9]+', ticket_structure[row][0])
+    for number in numbers:
+      ticket_list.append(int(number))
+  ticket_list = mergeSort(ticket_list)
+  largest_ticket = ticket_list[len(ticket_list) - 1]
+  return largest_ticket
+
+
 ##################
 # Menu functions #
 ##################
@@ -99,6 +113,8 @@ def displayMenu():  # Initial display function and log-in form.
         return print(
           "Allowed password attempts exceeded, Incident will be reported")
     displayAdmin()
+  else:
+    displayUser(username)
 
 
 # Admin display menu
@@ -134,6 +150,7 @@ def displayAdmin():
 
 # User display Menu
 def displayUser(username):
+  clear()
   print("""
   
 ████████╗██╗░█████╗░██╗░░██╗███████╗████████╗███████╗██████╗░
@@ -144,7 +161,11 @@ def displayUser(username):
 ░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝\n""")
   print(f"""Welcome {username}, Please select a function:\n
               [1] Book a Ticket
-              [2] Exit""")
+              [2] Exit\n""")
+  
+  choice = int(input("Please select a number to continue: "))
+  if choice == 1:
+    bookTicketUser(username)
 
 
 #########################
@@ -214,13 +235,8 @@ def bookTicketAdmin():
 ██████╦╝╚█████╔╝╚█████╔╝██║░╚██╗██║██║░╚███║╚██████╔╝
 ╚═════╝░░╚════╝░░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░╚═════╝░
         \n""")
-  ticket_list = []
-  for row in range(len(ticket_structure)):
-    numbers = re.findall('[0-9]+', ticket_structure[row][0])
-    for number in numbers:
-      ticket_list.append(int(number))
-  ticket_list = mergeSort(ticket_list)
-  ticket_id = ticket_list[len(ticket_list) - 1]
+  
+  largest_ticket = sortTickets()
 
   print("Please fill out the below prompts to book a new ticket to the system:\n")
   username = str(input("Please enter a username to append: "))
@@ -232,14 +248,14 @@ def bookTicketAdmin():
   priority = int(input("Enter the ticket holder's priority in the following format (ex: 0): "))
   print()
 
-  ticket = [f"tick{ticket_id + 1}", eventID, username, eventDate, priority]
+  ticket = [f"tick{largest_ticket + 1}", eventID, username, eventDate, priority]
 
   print(f"""
         ######################
         # Your current Ticket#
         ######################
         
-        Ticket ID: {ticket_id + 1}        
+        Ticket ID: {largest_ticket + 1}        
         EventID: {eventID}
         Username: {username}      
         EventDate: {eventDate}
@@ -249,11 +265,11 @@ def bookTicketAdmin():
   choice1 = input(str("Press Y to book your ticket or any other key to discard it and return to the main menu: "))
   if(choice1 == "Y" or choice1 == "y"):
     ticket_structure.append(ticket)
+    print(ticket_structure)
     print()
     print("Your ticket has been added to the system\n")
     choice2 = str(input("Press Y to add another ticket or any other key to return to the main menu: "))
     if(choice2 == "Y" or choice2 == "y"):
-      clear()
       bookTicketAdmin()
     else:
       displayAdmin()
@@ -263,6 +279,62 @@ def bookTicketAdmin():
 # Resources used for this function
 # I knew about regex before, but used this to figure out how to do what I needed to do
 # https://www.guru99.com/python-regular-expressions-complete-tutorial.html
+
+# A function allowing the user to book a ticket as opposed to the admin
+
+def bookTicketUser(username):
+  clear()
+  print(f"""
+
+██████╗░░█████╗░░█████╗░██╗░░██╗██╗███╗░░██╗░██████╗░
+██╔══██╗██╔══██╗██╔══██╗██║░██╔╝██║████╗░██║██╔════╝░
+██████╦╝██║░░██║██║░░██║█████═╝░██║██╔██╗██║██║░░██╗░
+██╔══██╗██║░░██║██║░░██║██╔═██╗░██║██║╚████║██║░░╚██╗
+██████╦╝╚█████╔╝╚█████╔╝██║░╚██╗██║██║░╚███║╚██████╔╝
+╚═════╝░░╚════╝░░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░╚═════╝░
+        \n""")
+  largest_ticket = sortTickets()
+
+  print("Please fill out the below prompts to book a new ticket to the system:\n")
+  
+  eventID = str(input("Please enter an eventID in the following format (ex: ev001, ev002): "))
+  print()
+  eventDate = str(input("Please enter the event date in the following format (ex: 2023-08-03): ")).replace('-','')
+
+  ticket = [f"tick{largest_ticket + 1}", eventID, username, eventDate, 0]
+
+  print(f"""
+        #######################
+        # {username}'s Ticket     #
+        #######################
+        
+        Ticket ID: {largest_ticket + 1}        
+        EventID: {eventID}
+        Username: {username}      
+        EventDate: {eventDate}
+        Priority: {0}
+        \n""")
+  
+  choice1 = input(str("Press Y to book your ticket or any other key to discard it and return to the main menu: "))
+  if(choice1 == "Y" or choice1 == "y"):
+    ticket_structure.append(ticket)
+    print()
+    print("Your ticket has been added to the system\n")
+    choice2 = str(input("Press Y to add another ticket or any other key to return to the main menu: "))
+    if(choice2 == "Y" or choice2 == "y"):
+      bookTicketUser(username)
+    else:
+      displayUser(username)
+  else:
+      displayUser(username)
+
+
+
+
+
+
+
+
 
 def showTickets(): # TO-DO, choice 3
   pass
@@ -338,18 +410,13 @@ def removeTicket():
     else:
       displayAdmin()
 
-      
-
-
-
-
-    
-
+#############      
+# Main loop #
+#############
 
 def main():
   importTickets()
-  # displayMenu()
-  removeTicket()
+  displayMenu()
 
 
 main()
