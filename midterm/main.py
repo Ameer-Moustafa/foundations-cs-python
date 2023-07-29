@@ -267,6 +267,8 @@ def bookTicketAdmin():
 def showTickets(): # TO-DO, choice 3
   pass
 
+# Function to change the priority of our ticket. 
+
 def changePriority():
   clear()
   print(f"""
@@ -302,12 +304,52 @@ def changePriority():
       displayAdmin()
 
 
+# A function to find and delete tickets
+def removeTicket():
+  clear()
+  print("""
+██████╗░███████╗███╗░░░███╗░█████╗░██╗░░░██╗███████╗  ████████╗██╗░█████╗░██╗░░██╗███████╗████████╗
+██╔══██╗██╔════╝████╗░████║██╔══██╗██║░░░██║██╔════╝  ╚══██╔══╝██║██╔══██╗██║░██╔╝██╔════╝╚══██╔══╝
+██████╔╝█████╗░░██╔████╔██║██║░░██║╚██╗░██╔╝█████╗░░  ░░░██║░░░██║██║░░╚═╝█████═╝░█████╗░░░░░██║░░░
+██╔══██╗██╔══╝░░██║╚██╔╝██║██║░░██║░╚████╔╝░██╔══╝░░  ░░░██║░░░██║██║░░██╗██╔═██╗░██╔══╝░░░░░██║░░░
+██║░░██║███████╗██║░╚═╝░██║╚█████╔╝░░╚██╔╝░░███████╗  ░░░██║░░░██║╚█████╔╝██║░╚██╗███████╗░░░██║░░░
+╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝░╚════╝░░░░╚═╝░░░╚══════╝  ░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚═╝╚══════╝░░░╚═╝░░░
+        \n""")
+  ticket_id = str(input("Enter a ticket to delete using the following format (ex: tick1, tick2): "))
+  print()
+  found_ticket = False
+  for row in range(len(ticket_structure)):
+    if ticket_structure[row][0] == ticket_id:
+      to_remove = row
+      found_ticket = True
+  if found_ticket:
+    ticket_structure.pop(to_remove)
+    print("Ticket with the provided ID has been found and has been deleted")
+    choice = input("Press Y to search for and delete another ticket or any other key to return to the main menu: ")
+    if choice == "Y" or choice == "y":
+      removeTicket()
+    else:
+      displayAdmin()
+  else:
+    print("Ticket with the provided ID has not been found")
+    choice = input("Press Y to search for another ticket or any other key to return to the main menu: ")
+    if choice == "Y" or choice == "y":
+      removeTicket()
+    else:
+      displayAdmin()
+
+      
+
+
+
+
     
 
 
 def main():
   importTickets()
-  displayMenu()
+  # displayMenu()
+  removeTicket()
 
 
 main()
