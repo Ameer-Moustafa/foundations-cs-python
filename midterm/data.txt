@@ -1,3 +1,3 @@
-tick11, ev001, ameer, 20230803, 5
-tick1, ev003, fred, 20230802, 0
-tick2, ev002, gio, 20230803, 2
+tick1 ev003 fred 20230802 0
+tick2 ev002 gio 20230803 2
+tick3 ev002 ameer 20230401 0

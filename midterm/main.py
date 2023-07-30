@@ -166,6 +166,10 @@ def displayUser(username):
   choice = int(input("Please select a number to continue: "))
   if choice == 1:
     bookTicketUser(username)
+  elif choice == 2:
+    writeTickets()
+    print("[-] Exiting")
+    return
 
 
 #########################
@@ -187,6 +191,18 @@ def importTickets():
 
 # Resources used for this function:
 # https://realpython.com/read-write-files-python/ - To learn how to read and write files as well as iterate through.
+
+
+# A function to write our modified structure into our text file
+
+def writeTickets():
+  with open('data.txt', 'w') as data:
+    for row in ticket_structure:
+        data.write(' '.join([str(col) for col in row]) + '\n')
+
+# Resources used for this function:
+# https://stackoverflow.com/questions/60692703/how-to-write-a-matrix-2d-array-to-a-text-file-python
+# Found a function that does exactly what I needed here, list comprehension is also very cool
 
 
 # Function to display the event ID with the highest number of tickets
@@ -413,7 +429,6 @@ def removeTicket():
 #############      
 # Main loop #
 #############
-
 def main():
   importTickets()
   displayMenu()
