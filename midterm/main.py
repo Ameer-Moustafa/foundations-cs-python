@@ -146,6 +146,20 @@ def displayAdmin():
     pass
   elif choice == 4:
     changePriority()
+  elif choice == 5:
+    removeTicket()
+  elif choice == 6:
+    pass
+  elif choice == 7:
+    choice2 = input("Press Y if you would like to save your changes, any other button to discard and exit: ")
+    if choice2 == "y" or choice2 == "Y":
+      writeTickets()
+      print("[-] Exiting")
+      return
+    else:
+      print("[-] Exiting")
+      return
+
 
 
 # User display Menu
@@ -198,7 +212,7 @@ def importTickets():
 def writeTickets():
   with open('data.txt', 'w') as data:
     for row in ticket_structure:
-        data.write(' '.join([str(col) for col in row]) + '\n')
+        data.write(', '.join([str(col) for col in row]) + '\n')
 
 # Resources used for this function:
 # https://stackoverflow.com/questions/60692703/how-to-write-a-matrix-2d-array-to-a-text-file-python
