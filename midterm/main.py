@@ -384,8 +384,10 @@ def changePriority():
         \n""")
   ticket_id = str(input("Enter your ticket ID with the following order (ex: tick1, tick11): "))
   priority = int(input("Enter your tickets priority number: (ex: 0): "))
+  ticket_flag = False
   for row in range(len(ticket_structure)):
     if ticket_structure[row][0] == ticket_id and ticket_structure[row][4] == priority:
+      ticket_flag = True
       new_priority = int(input("Your ticket has been found, please enter a new priority number: "))
       ticket_structure[row][4] = new_priority
       print("Ticket priority has been changed \n")
@@ -395,8 +397,6 @@ def changePriority():
         changePriority()
       else:
         displayAdmin()
-    else:
-      ticket_flag = False
 
   if not ticket_flag:
     choice = input("Your ticket has not been found, press Y to search for another ticket or any key to return to the main menu: ")
