@@ -365,7 +365,6 @@ def bookTicketUser(username):
 
 
 # A function that sorts and display every ticket from today onwards sorted by date and event ID
-# TO-DO: Fix bug that returns an empty list after running the function a second time recursively
 
 def displayTickets():
   sorted_tickets = []
@@ -383,7 +382,7 @@ def displayTickets():
 
   for row in range(len(ticket_structure)):
     if ticket_structure[row][3] >= today:
-      sorted_tickets.append(ticket_structure[row])
+      sorted_tickets.append(ticket_structure[row].copy())
 
   for row in range(len(sorted_tickets)):
     sorted_tickets[row][1] = f'!{sorted_tickets[row][1]}'
@@ -406,6 +405,14 @@ def displayTickets():
     displayTickets()
   else:
     displayAdmin()
+
+# Resources used for this function:
+# Used the below website to learn about the date object and it's today method in datetime
+# https://realpython.com/python-datetime/
+# Had a strange bug with this statement that altered the original list sorted_tickets.append(ticket_structure[row])
+# added copy() to create a copy of the list, but not exactly sure why bug was happening.
+
+
 
 
 
@@ -487,8 +494,7 @@ def removeTicket():
 #############
 def main():
   importTickets()
-  #displayMenu()
-  displayTickets()
+  displayMenu()
 
 
 main()
