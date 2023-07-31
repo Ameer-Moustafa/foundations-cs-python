@@ -397,8 +397,7 @@ def displayTickets():
   for row in range(len(sorted_tickets)):
     ticket_date = sorted_tickets[row][0]
     eventID = sorted_tickets[row][1]
-    print(f"{ticket_date[7:9] + ' / ' + ticket_date[5:7] + ' / ' + ticket_date[1:5] } - Event ID: {eventID[1:len(eventID)]} - Ticket ID: {sorted_tickets[row][4]} - Username: {sorted_tickets[row][3]} - Priority: {sorted_tickets[row][2]}")
-    print()
+    print(f"{ticket_date[7:9] + ' / ' + ticket_date[5:7] + ' / ' + ticket_date[1:5] } - Event ID: {eventID[1:len(eventID)]} - Ticket ID: {sorted_tickets[row][4]} - Username: {sorted_tickets[row][3]} - Priority: {sorted_tickets[row][2]}\n")
 
   choice = input("Press Y to display tickets again or any key to return to the main menu: ")
   if(choice == "y" or choice == "Y"):
@@ -494,24 +493,42 @@ def removeTicket():
 # A function that will display today's events sorted by priority then remove them from the structure.
 
 def runEvents():
+  print("""
+
+██████╗░██╗░░░██╗███╗░░██╗  ███████╗██╗░░░██╗███████╗███╗░░██╗████████╗░██████╗
+██╔══██╗██║░░░██║████╗░██║  ██╔════╝██║░░░██║██╔════╝████╗░██║╚══██╔══╝██╔════╝
+██████╔╝██║░░░██║██╔██╗██║  █████╗░░╚██╗░██╔╝█████╗░░██╔██╗██║░░░██║░░░╚█████╗░
+██╔══██╗██║░░░██║██║╚████║  ██╔══╝░░░╚████╔╝░██╔══╝░░██║╚████║░░░██║░░░░╚═══██╗
+██║░░██║╚██████╔╝██║░╚███║  ███████╗░░╚██╔╝░░███████╗██║░╚███║░░░██║░░░██████╔╝
+╚═╝░░╚═╝░╚═════╝░╚═╝░░╚══╝  ╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░╚═════╝░\n""")
+  
   today = str(date.today()).replace('-', '')
 
   todays_tickets = []
 
-  print(ticket_structure)
+  for row in ticket_structure.copy():
+    if row[3] == today:
+      todays_tickets.append(row)
+      ticket_structure.remove(row)
+  
+  print("Todays events:\n")
 
-  for row in range(0, len(ticket_structure) - 1):
-    if ticket_structure[row][3] == today:
-      todays_tickets.append(ticket_structure[row].copy())
-      ticket_structure.pop(row)
+  for row in range(len(todays_tickets)):
+    todays_tickets[row][1] = f'!{todays_tickets[row][1]}'
+    todays_tickets[row][4] = str(f'!{todays_tickets[row][4]}')
+    todays_tickets[row] = mergeSort(todays_tickets[row])
+
+  sorted_list = mergeSort(todays_tickets)
+
+  for row in sorted_list:
+    priority = row[0]
+    eventID = row[1]
+    print(f'Priority: {priority[1:len(priority)]} - event ID: {eventID[1:len(eventID)]} - Username: {row[3]} - ticket ID: {row[4]}\n')
 
 # References for this function:
-# learned how to delete elements from a list while iterating through it from here.
+# learned how to delete elements from a list while iterating through it from here and how for..in works vs for..in..range()
 # https://bobbyhadz.com/blog/python-for-loop-remove-elements-from-list#remove-elements-from-a-list-while-iterating-in-python
   
-
-
-
 
 #############      
 # Main loop #
@@ -520,6 +537,8 @@ def main():
   importTickets()
   # displayMenu()
   runEvents()
+
+
 
 
 main()
