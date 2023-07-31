@@ -411,6 +411,7 @@ def displayTickets():
 # https://realpython.com/python-datetime/
 # Had a strange bug with this statement that altered the original list sorted_tickets.append(ticket_structure[row])
 # added copy() to create a copy of the list, but not exactly sure why bug was happening.
+# I couldn't understand why appending to a new array, modified the original array, maybe because of aliasing.
 
 
 
@@ -489,12 +490,32 @@ def removeTicket():
     else:
       displayAdmin()
 
+
+# A function that will display today's events sorted by priority then remove them from the structure.
+
+def runEvents():
+  today = str(date.today()).replace('-', '')
+
+  todays_tickets = []
+
+  print(ticket_structure)
+
+  for row in range(0, len(ticket_structure) - 1):
+    if ticket_structure[row][3] == today:
+      todays_tickets.append(ticket_structure[row].copy())
+      ticket_structure.pop(row)
+  
+
+
+
+
 #############      
 # Main loop #
 #############
 def main():
   importTickets()
-  displayMenu()
+  # displayMenu()
+  runEvents()
 
 
 main()
