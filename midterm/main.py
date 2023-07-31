@@ -148,7 +148,7 @@ def displayAdmin():
   elif choice == 2:
     bookTicketAdmin()
   elif choice == 3:
-    showTickets()
+    displayTickets()
   elif choice == 4:
     changePriority()
   elif choice == 5:
@@ -364,13 +364,11 @@ def bookTicketUser(username):
       displayUser(username)
 
 
+# A function that sorts and display every ticket from today onwards sorted by date and event ID
+# TO-DO: Fix bug that returns an empty list after running the function a second time recursively
 
-
-
-
-
-
-def showTickets(): # TO-DO, choice 3
+def displayTickets():
+  sorted_tickets = []
   clear()
   print(f"""
 
@@ -380,33 +378,32 @@ def showTickets(): # TO-DO, choice 3
 ░░░██║░░░██║██║░░██╗██╔═██╗░██╔══╝░░░░░██║░░░░╚═══██╗
 ░░░██║░░░██║╚█████╔╝██║░╚██╗███████╗░░░██║░░░██████╔╝
 ░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚═════╝░\n""")
-  today = str(date.today()).replace('-', '')
   
-  sorted_tickets = []
+  today = str(date.today()).replace('-', '')
 
   for row in range(len(ticket_structure)):
-    if int(ticket_structure[row][3]) >= int(today):
+    if ticket_structure[row][3] >= today:
       sorted_tickets.append(ticket_structure[row])
-  
+
   for row in range(len(sorted_tickets)):
     sorted_tickets[row][1] = f'!{sorted_tickets[row][1]}'
     sorted_tickets[row][3] = f'!{sorted_tickets[row][3]}'
     sorted_tickets[row][4] = str(sorted_tickets[row][4])
     sorted_tickets[row] = mergeSort(sorted_tickets[row])
-
+  
   sorted_tickets = mergeSort(sorted_tickets)
 
   print("[-] Now displaying tickets sorted by date and event ID\n")
 
-  for row in range( len(sorted_tickets)):
+  for row in range(len(sorted_tickets)):
     ticket_date = sorted_tickets[row][0]
     eventID = sorted_tickets[row][1]
     print(f"{ticket_date[7:9] + ' / ' + ticket_date[5:7] + ' / ' + ticket_date[1:5] } - Event ID: {eventID[1:len(eventID)]} - Ticket ID: {sorted_tickets[row][4]} - Username: {sorted_tickets[row][3]} - Priority: {sorted_tickets[row][2]}")
     print()
-  
+
   choice = input("Press Y to display tickets again or any key to return to the main menu: ")
   if(choice == "y" or choice == "Y"):
-    showTickets()
+    displayTickets()
   else:
     displayAdmin()
 
@@ -490,7 +487,8 @@ def removeTicket():
 #############
 def main():
   importTickets()
-  displayMenu()
+  #displayMenu()
+  displayTickets()
 
 
 main()
