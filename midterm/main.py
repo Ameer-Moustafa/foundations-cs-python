@@ -504,6 +504,10 @@ def runEvents():
     if ticket_structure[row][3] == today:
       todays_tickets.append(ticket_structure[row].copy())
       ticket_structure.pop(row)
+
+# References for this function:
+# learned how to delete elements from a list while iterating through it from here.
+# https://bobbyhadz.com/blog/python-for-loop-remove-elements-from-list#remove-elements-from-a-list-while-iterating-in-python
   
 
 
