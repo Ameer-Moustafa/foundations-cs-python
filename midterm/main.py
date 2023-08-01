@@ -299,6 +299,9 @@ def getStatistics():
 
 
 # A function allowing the admin to book tickets
+
+# O(N*logN) due to our sortTickets() function being called using mergeSort under the hood and the amount of tickets we need to sort.
+
 def bookTicketAdmin():
   clear()
   print(f"""
@@ -311,9 +314,12 @@ def bookTicketAdmin():
 ╚═════╝░░╚════╝░░╚════╝░╚═╝░░╚═╝╚═╝╚═╝░░╚══╝░╚═════╝░
         \n""")
   
+  # Getting the largest ticket from our sortTickets function
   largest_ticket = sortTickets()
 
+  # Getting input for the user and saving it in a ticket array with the ticket ID incremeneted
   print("Please fill out the below prompts to book a new ticket to the system:\n")
+
   username = str(input("Please enter a username to append: "))
   print()
   eventID = str(input("Please enter an eventID in the following format (ex: ev001, ev002): "))
@@ -337,6 +343,7 @@ def bookTicketAdmin():
         Priority: {priority}
         """)
 
+  # Asking the admin if they would like to save their ticket to the system and appending the ticket to the main structure if so.
   choice1 = input(str("Press Y to book your ticket or any other key to discard it and return to the main menu: "))
   if(choice1 == "Y" or choice1 == "y"):
     ticket_structure.append(ticket)
@@ -354,7 +361,10 @@ def bookTicketAdmin():
 # I knew about regex before, but used this to figure out how to do what I needed to do
 # https://www.guru99.com/python-regular-expressions-complete-tutorial.html
 
-# A function allowing the user to book a ticket as opposed to the admin
+
+# A function allowing the user to book a ticket as opposed to the admin. Does almost the same thing as the function above.
+
+# O(N*logN) due to calling merge sort, same as our above function.
 
 def bookTicketUser(username):
   clear()
@@ -370,7 +380,6 @@ def bookTicketUser(username):
   largest_ticket = sortTickets()
 
   print("Please fill out the below prompts to book a new ticket to the system:\n")
-  
   eventID = str(input("Please enter an eventID in the following format (ex: ev001, ev002): "))
   print()
   eventDate = str(input("Please enter the event date in the following format (ex: 2023-08-03): ")).replace('-','')
@@ -405,8 +414,9 @@ def bookTicketUser(username):
 
 # A function that sorts and display every ticket from today onwards sorted by date and event ID
 
+# The big O of our function is O(N^2 * logN), The most expensive thing is iterating through the rows of our array and applying mergesort to every inner row.
+
 def displayTickets():
-  sorted_tickets = []
   clear()
   print(f"""
 
@@ -416,23 +426,29 @@ def displayTickets():
 ░░░██║░░░██║██║░░██╗██╔═██╗░██╔══╝░░░░░██║░░░░╚═══██╗
 ░░░██║░░░██║╚█████╔╝██║░╚██╗███████╗░░░██║░░░██████╔╝
 ░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚═════╝░\n""")
-  
+
+  # Getting today's date and formatting it for easier sorting and comparison.
   today = str(date.today()).replace('-', '')
 
+  sorted_tickets = []
+  # Iterating through our main structure and appending any tickets with todays date or a future date into a new array.
   for row in range(len(ticket_structure)):
     if ticket_structure[row][3] >= today:
       sorted_tickets.append(ticket_structure[row].copy())
 
+  # Appending "!" to the necessary columns for sorting then applying merge sort on the rows of our 2D array.
   for row in range(len(sorted_tickets)):
     sorted_tickets[row][1] = f'!{sorted_tickets[row][1]}'
     sorted_tickets[row][3] = f'!{sorted_tickets[row][3]}'
     sorted_tickets[row][4] = str(sorted_tickets[row][4])
     sorted_tickets[row] = mergeSort(sorted_tickets[row])
   
+  # Applying merge sort to our sorted_tickets structure as a whole
   sorted_tickets = mergeSort(sorted_tickets)
 
   print("[-] Now displaying tickets sorted by date and event ID\n")
 
+  # Formatting and displaying tickets sorted by date and event ID.
   for row in range(len(sorted_tickets)):
     ticket_date = sorted_tickets[row][0]
     eventID = sorted_tickets[row][1]
@@ -452,12 +468,9 @@ def displayTickets():
 # I couldn't understand why appending to a new array, modified the original array, maybe because of aliasing.
 
 
-
-
-
-
-
 # Function to change the priority of our ticket. 
+
+# O(N) N being the amount of rows we have to loop through in our main structure.
 
 def changePriority():
   clear()
@@ -470,22 +483,30 @@ def changePriority():
 ██║░░░░░██║░░██║██║╚█████╔╝██║░░██║██║░░░██║░░░░░░██║░░░
 ╚═╝░░░░░╚═╝░░╚═╝╚═╝░╚════╝░╚═╝░░╚═╝╚═╝░░░╚═╝░░░░░░╚═╝░░░
         \n""")
+
   ticket_id = str(input("Enter your ticket ID with the following order (ex: tick1, tick11): "))
   priority = int(input("Enter your tickets priority number: (ex: 0): "))
+
   ticket_flag = False
+
+  # Iterate through the main structure and search for a ticket that matches our criteria. set our ticket_flag to true if a ticket is found and change it's priority.
   for row in range(len(ticket_structure)):
     if ticket_structure[row][0] == ticket_id and ticket_structure[row][4] == priority:
       ticket_flag = True
+
       new_priority = int(input("Your ticket has been found, please enter a new priority number: "))
       ticket_structure[row][4] = new_priority
+
       print("Ticket priority has been changed \n")
       print()
+
       choice = input("Press Y to change another ticket's priority or any other key to return to the main menu: ")
       if(choice == "Y" or choice == "y"):
         changePriority()
       else:
         displayAdmin()
 
+  # Go into this loop if our ticket_flag remains false, meaning a ticket has not been found
   if not ticket_flag:
     choice = input("Your ticket has not been found, press Y to search for another ticket or any key to return to the main menu: ")
     if(choice == "Y" or choice == "y"):
@@ -494,7 +515,11 @@ def changePriority():
       displayAdmin()
 
 
+
 # A function to find and delete tickets
+
+# O(N) N being the amount of tickets we need to iterate through.
+
 def removeTicket():
   clear()
   print("""
@@ -505,13 +530,19 @@ def removeTicket():
 ██║░░██║███████╗██║░╚═╝░██║╚█████╔╝░░╚██╔╝░░███████╗  ░░░██║░░░██║╚█████╔╝██║░╚██╗███████╗░░░██║░░░
 ╚═╝░░╚═╝╚══════╝╚═╝░░░░░╚═╝░╚════╝░░░░╚═╝░░░╚══════╝  ░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚═╝╚══════╝░░░╚═╝░░░
         \n""")
+
   ticket_id = str(input("Enter a ticket to delete using the following format (ex: tick1, tick2): "))
   print()
+
   found_ticket = False
+
+  # Iterate through the main ticket structure and find the ticket_ID taken from the user.
   for row in range(len(ticket_structure)):
     if ticket_structure[row][0] == ticket_id:
       to_remove = row
       found_ticket = True
+  
+  # If a ticket is found, remove it and ask the admin if they would like to search for another ticket
   if found_ticket:
     ticket_structure.pop(to_remove)
     print("Ticket with the provided ID has been found and has been deleted")
@@ -531,6 +562,8 @@ def removeTicket():
 
 # A function that will display today's events sorted by priority then remove them from the structure.
 
+# The big O of our function is O(N^2 * logN), The most expensive thing is iterating through the rows of our array and applying mergesort to every inner row.
+
 def runEvents():
   print("""
 
@@ -545,6 +578,8 @@ def runEvents():
 
   todays_tickets = []
 
+  # Iterate through a copy of our main structure, used a copy to be able to iterate through and delete from the original array without any bugs.
+  # Append today's tickets to a new array for sorting and remove them from the original array.
   for row in ticket_structure.copy():
     if row[3] == today:
       todays_tickets.append(row)
@@ -552,29 +587,38 @@ def runEvents():
   
   print("Todays events:\n")
 
+  # Iterate through todays tickets and add '!' to the necessary strings for easier sorting, then applying merge sort to the inner rows
   for row in range(len(todays_tickets)):
     todays_tickets[row][1] = f'!{todays_tickets[row][1]}'
     todays_tickets[row][4] = str(f'!{todays_tickets[row][4]}')
     todays_tickets[row] = mergeSort(todays_tickets[row])
 
+  # Apply merge sort on the outer array.
   sorted_list = mergeSort(todays_tickets)
 
+  # Iterate through the sorted list and format the tickets for display.
   for row in sorted_list:
     priority = row[0]
     eventID = row[1]
     print(f'Priority: {priority[1:len(priority)]} - event ID: {eventID[1:len(eventID)]} - Username: {row[3]} - ticket ID: {row[4]}\n')
   
-  choice = input("Events are running, press Y to return to the main menu or any other button to quit: ")
+  choice = input("Events are running, press Y to return to the main menu or any other button to return to the main menu: ")
 
   if choice == "y" or choice == "Y":
     displayAdmin()
   else:
-    return
+    if(todays_tickets == False):
+      error_message = input("[-] Todays events have been ran, press any button to return to the main menu: ")
+      displayAdmin()
+
 
 # References for this function:
 # learned how to delete elements from a list while iterating through it from here and how for..in works vs for..in..range()
 # https://bobbyhadz.com/blog/python-for-loop-remove-elements-from-list#remove-elements-from-a-list-while-iterating-in-python
   
+
+
+# The overall big O of our program is O(N^2 * LogN)
 
 #############      
 # Main loop #
