@@ -3,6 +3,7 @@
 ###########
 
 #Importing Python's built in OS method to read from files and create a clear function for tidiness purposes.
+
 import os
 
 # Importing Regex to isolate integers from strings for sorting purposes
@@ -27,8 +28,9 @@ ticket_structure = []
 ####################
 
 
-# A simple function to clear the screen, for OCD purposes
+# A simple function to clear the screen, for OCD purposes. O(1)
 def clear():
+  # If statement used to check if the system is windows or not
   if os.name == 'nt':
       os.system('cls')
   else:
@@ -39,9 +41,12 @@ def clear():
 # Merge sort implementation #
 #############################
 
+# O(N*LogN) N being the size of the array we're sorting
+
+
 # I have chosen merge sort as my algorithm of choice because O(NlogN) is faster than O(N^2) when N is over 100 according to my research. Since the number of tickets could very well go over 100. I have chosen Merge sort.
 
-# Research Reference
+# Research Reference:
 # https://stackoverflow.com/questions/23329234/which-is-better-on-log-n-or-on2
 # Video showed me a cleaner implementation, learned it before but decided to include it here regardless.
 # https://www.youtube.com/watch?v=iR1CXiC7OQc
@@ -51,6 +56,7 @@ def merge(left, right):  # This function will handle the merging part of our mer
   merged_array = []
   index_left = 0
   index_right = 0
+
   while index_left < len(left) and index_right < len(right):
     if left[index_left] < right[index_right]:
       merged_array.append(left[index_left])
@@ -58,28 +64,40 @@ def merge(left, right):  # This function will handle the merging part of our mer
     else:
       merged_array.append(right[index_right])
       index_right += 1
+
   merged_array += left[index_left:]
   merged_array += right[index_right:]
+
   return merged_array
 
 
 def mergeSort(list):  # This function will handle the splitting of the arrays in our implementation
+
   if len(list) <= 1:
     return list
+
   mid = len(list) // 2
   left = mergeSort(list[:mid])
   right = mergeSort(list[mid:])
+
   return merge(left, right)
 
 
 # A function that will sort tickets using regex, will be used to auto increment ticket IDs when booking
 
+# O(N*logN) is our worse case scenario, N being the amount of tickets we need to sort.
+
 def sortTickets():
+
   ticket_list = []
+
+  # Extracting numbers from our ticket IDs and appending to ticket_list for easier sorting
   for row in range(len(ticket_structure)):
     numbers = re.findall('[0-9]+', ticket_structure[row][0])
     for number in numbers:
       ticket_list.append(int(number))
+
+  # Applying mergeSort to our ticket_list, for easy incrementation
   ticket_list = mergeSort(ticket_list)
   largest_ticket = ticket_list[len(ticket_list) - 1]
   return largest_ticket
@@ -89,8 +107,11 @@ def sortTickets():
 # Menu functions #
 ##################
 
+# Initial display function and log-in form.
 
-def displayMenu():  # Initial display function and log-in form.
+# O(1)
+
+def displayMenu():  
   print("""
   
 ██╗░░░░░░█████╗░░██████╗░██╗███╗░░██╗
@@ -118,12 +139,17 @@ def displayMenu():  # Initial display function and log-in form.
         return print(
           "Allowed password attempts exceeded, Incident will be reported")
     displayAdmin()
+  
   else:
     displayUser(username)
 
 
 # Admin display menu
+
+# O(N) N being the amount of times we have to write to the file if the admin chooses to save
+
 def displayAdmin():
+
   clear()
   print("""
   
@@ -142,6 +168,7 @@ def displayAdmin():
             [6] Run Events
             [7] Exit\n""")
 
+
   choice = int(input("Please select a number to continue: "))
   if choice == 1:
     getStatistics()
@@ -154,7 +181,7 @@ def displayAdmin():
   elif choice == 5:
     removeTicket()
   elif choice == 6:
-    pass
+    runEvents()
   elif choice == 7:
     choice2 = input("Press Y if you would like to save your changes, any other button to discard and exit: ")
     if choice2 == "y" or choice2 == "Y":
@@ -168,6 +195,9 @@ def displayAdmin():
 
 
 # User display Menu
+
+# O(N) N being the amount of times we have to write to the file when the user exists
+
 def displayUser(username):
   clear()
   print("""
@@ -197,6 +227,8 @@ def displayUser(username):
 
 # A function to import our data and build our data structure.
 
+# O(N) N representing how many lines we need to import from our text file
+
 
 def importTickets():
   with open('data.txt', 'r') as data:
@@ -214,6 +246,8 @@ def importTickets():
 
 # A function to write our modified structure into our text file
 
+# O(N) N representing how many lines we need to write to our text file
+
 def writeTickets():
   with open('data.txt', 'w') as data:
     for row in ticket_structure:
@@ -226,6 +260,8 @@ def writeTickets():
 
 # Function to display the event ID with the highest number of tickets
 
+# O(N) N in this case being the size of the list we're running our max() function on.
+
 def getStatistics():
   clear()
   print(f"""
@@ -237,16 +273,20 @@ def getStatistics():
 ██████╔╝░░░██║░░░██║░░██║░░░██║░░░██║██████╔╝░░░██║░░░██║╚█████╔╝██████╔╝
 ╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═════╝░░░░╚═╝░░░╚═╝░╚════╝░╚═════╝░
         \n""")
+
   event_list = []
+
+  # Iterating through our main structure and appending our events to the event_list list.
   for row in range(len(ticket_structure)):
     event_list.append(ticket_structure[row][1])
-    most_popular_event = max(event_list)
-  print(
-    f"Event number {most_popular_event[len(most_popular_event) - 1]} is the event with the highest ticket sales\n"
-  )
-  choice = input(
-    "Please enter Y to check statistics again or any other key to return to the main menu: "
-  )
+  
+  # Using max() to count how many times an event appears withint our event_list. The event that appears the most has the most tickets
+  most_popular_event = max(event_list)
+  
+  print(f"{most_popular_event} is the event with the highest ticket sales\n")
+
+
+  choice = input("Please enter Y to check statistics again or any other key to return to the main menu: ")
   if choice == "y" or choice == "Y":
     getStatistics()
   else:
@@ -300,7 +340,6 @@ def bookTicketAdmin():
   choice1 = input(str("Press Y to book your ticket or any other key to discard it and return to the main menu: "))
   if(choice1 == "Y" or choice1 == "y"):
     ticket_structure.append(ticket)
-    print(ticket_structure)
     print()
     print("Your ticket has been added to the system\n")
     choice2 = str(input("Press Y to add another ticket or any other key to return to the main menu: "))
@@ -524,6 +563,13 @@ def runEvents():
     priority = row[0]
     eventID = row[1]
     print(f'Priority: {priority[1:len(priority)]} - event ID: {eventID[1:len(eventID)]} - Username: {row[3]} - ticket ID: {row[4]}\n')
+  
+  choice = input("Events are running, press Y to return to the main menu or any other button to quit: ")
+
+  if choice == "y" or choice == "Y":
+    displayAdmin()
+  else:
+    return
 
 # References for this function:
 # learned how to delete elements from a list while iterating through it from here and how for..in works vs for..in..range()
@@ -535,8 +581,7 @@ def runEvents():
 #############
 def main():
   importTickets()
-  # displayMenu()
-  runEvents()
+  displayMenu()
 
 
 
