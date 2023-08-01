@@ -587,6 +587,11 @@ def runEvents():
   
   print("Todays events:\n")
 
+  if not todays_tickets:
+      print()
+      error_message = input("[-] Todays events have been ran, press any button to return to the main menu: ")
+      return displayAdmin()
+
   # Iterate through todays tickets and add '!' to the necessary strings for easier sorting, then applying merge sort to the inner rows
   for row in range(len(todays_tickets)):
     todays_tickets[row][1] = f'!{todays_tickets[row][1]}'
@@ -602,14 +607,13 @@ def runEvents():
     eventID = row[1]
     print(f'Priority: {priority[1:len(priority)]} - event ID: {eventID[1:len(eventID)]} - Username: {row[3]} - ticket ID: {row[4]}\n')
   
-  choice = input("Events are running, press Y to return to the main menu or any other button to return to the main menu: ")
+  choice = input("Events are running, press Y to run events again or any other button to return to the main menu: ")
 
   if choice == "y" or choice == "Y":
-    displayAdmin()
+    runEvents()
   else:
-    if(todays_tickets == False):
-      error_message = input("[-] Todays events have been ran, press any button to return to the main menu: ")
-      displayAdmin()
+    displayAdmin()
+    
 
 
 # References for this function:
@@ -618,7 +622,7 @@ def runEvents():
   
 
 
-# The overall big O of our program is O(N^2 * LogN)
+# The worst case runtime of our program is O(N^2 * logN)
 
 #############      
 # Main loop #
