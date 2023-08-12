@@ -203,22 +203,22 @@ class PriorityQueue:
         else:
             current = self.head
             previous = current
-
-
-            
-
-
-
-
-        
-
-
-            
-            
-            
-
+            # if student to be added's attitude is bad, just add it to the end of the list
+            if node.data.getAttitude() == False:
+                while current.next != None:
+                    current = current.next
+                current.next = node
+                self.size += 1
                 
+            else:
+            
+                while current != None and current.data.getAttitude() == True and current.data.getFinalGrade() >= node.data.getFinalGrade():
+                    previous = current
+                    current = current.next
 
+                previous.next = node
+                node.next = current
+                self.size += 1
 
 
 batoul = Student('Batoul', 60, 70, True)
@@ -235,7 +235,11 @@ faisal = Student('Faisal', 30, 80, True)
 
 test_prio = PriorityQueue()
 test_prio.enqueue(ali)
+test_prio.enqueue(batoul)
 test_prio.enqueue(omar)
+test_prio.enqueue(faisal)
+
+
 
 
 test_prio.display()
