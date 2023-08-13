@@ -212,40 +212,13 @@ class PriorityQueue:
                 
             else:
             
-                while current != None and current.data.getAttitude() == True and current.data.getFinalGrade() >= node.data.getFinalGrade():
+                while current != None and current.data.getAttitude():
                     previous = current
                     current = current.next
 
                 previous.next = node
                 node.next = current
                 self.size += 1
-
-
-batoul = Student('Batoul', 60, 70, True)
-
-ali = Student('Ali', 100, 100, False)
-
-omar = Student('omar', 100, 100, False)
-
-mazen = Student('Mazen', 70, 75, True)
-
-faisal = Student('Faisal', 30, 80, True)
-
-
-
-test_prio = PriorityQueue()
-test_prio.enqueue(ali)
-test_prio.enqueue(batoul)
-test_prio.enqueue(omar)
-test_prio.enqueue(faisal)
-
-
-
-
-test_prio.display()
-
-
-
 
 
 

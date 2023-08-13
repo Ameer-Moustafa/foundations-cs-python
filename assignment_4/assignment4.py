@@ -161,6 +161,10 @@ def plaindromeCheckerMenu():
 ############################    
 # Priority Queue Functions #
 ############################
+def addStudent():
+    student_name = input("Enter the student's name: ")
+    student_midterm = eval(input("Enter the student's mid-term grade: "))
+    student_midterm = eval(input("Enter the student's final grade: "))
 
 
 
