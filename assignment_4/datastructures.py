@@ -1,12 +1,13 @@
 
 # A node class that will be reused for a lot of our data structure
-
+# O(1)
 class Node:
     def __init__(self, data):
         self.data = data
         self.next = None
 
 # A singly linked list class 
+# O(n) our worst case is how many nodes we have in our LL.
 class LinkedList:
     def __init__(self):
         self.head = None
@@ -53,6 +54,7 @@ class LinkedList:
         return print(f"All instances of the number {value} have been removed!")
 
 # A Queue data structure
+# O(N) N is the amount of nodes we need to display when calling our display method.
 class Queue:
     def __init__(self):
         self.head = None
@@ -98,7 +100,7 @@ class Queue:
             return value
 
 # A stack data structure
-
+# O(1)
 class Stack:
     def __init__(self):
         self.head = None
@@ -129,7 +131,7 @@ class Stack:
             print(self.head.data)
 
 # The constructor for our Student object
-
+# O(1)
 class Student:
     def __init__(self, name, midterm_grade, final_grade, good_attitude):
         self.name = name
@@ -150,7 +152,7 @@ class Student:
         return self.good_attitude
 
 # The priority queue data structure that we're going to use to process students
-
+# O(N) N represents the elements we need to add to or remove from our Queue.
 class PriorityQueue:
     def __init__(self):
         self.head = None
@@ -199,7 +201,7 @@ class PriorityQueue:
             else:
                 self.head.next = node
                 self.size += 1
-        # Rest of logic to add when queue has 2 elements. Everything above works, don't touch it
+        # Rest of logic to add when queue has 2 elements.
         else:
             current = self.head
             previous = current
@@ -209,9 +211,7 @@ class PriorityQueue:
                     current = current.next
                 current.next = node
                 self.size += 1
-                
             else:
-            
                 while current != None and current.data.getAttitude():
                     previous = current
                     current = current.next
@@ -219,7 +219,20 @@ class PriorityQueue:
                 previous.next = node
                 node.next = current
                 self.size += 1
-
+    
+    def dequeue(self):
+        if self.isEmpty():
+            print("The priority queue is empty, nothing to remove")
+        elif self.size == 1:
+            value = self.head.data
+            self.head = None
+            self.size -= 1
+            return value
+        else:
+            value = self.head.data
+            self.head = self.head.next
+            self.size -= 1
+            return value
 
 
 
@@ -229,3 +242,6 @@ singly_list = LinkedList()
 # The stack and queue we're going to be using for our plaindrome problem
 plaindrome_stack = Stack()
 plaindrome_queue = Queue()
+
+# A priority queue to deal with our students
+student_queue = PriorityQueue()
